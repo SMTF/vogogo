@@ -7,6 +7,7 @@ class Digit(object):
 	GLIF_VALUES = {" " : 0, "|" : 1, "_" : 2}
 	ZERO  = numpy.matrix([[0,2,0], [1,0,1], [1,2,1]])
 	ONE   = numpy.matrix([[0,0,0], [1,0,0], [1,0,0]])
+	ONE_ALT   = numpy.matrix([[0,0,0], [0,0,1], [0,0,1]])
 	TWO   = numpy.matrix([[0,2,0], [0,2,1], [1,2,0]])
 	THREE = numpy.matrix([[0,2,0], [0,2,1], [0,2,1]])
 	FOUR  = numpy.matrix([[0,0,0], [1,2,1], [0,0,1]])
@@ -53,7 +54,7 @@ class Digit(object):
 		value = None
 		if (self.matrix == self.ZERO).all():
 			value = 0
-		elif (self.matrix == self.ONE).all():
+		elif (self.matrix == self.ONE).all() or (self.matrix == self.ONE_ALT).all():
 			value = 1
 		elif (self.matrix == self.TWO).all():
 			value = 2
@@ -154,11 +155,7 @@ if __name__ == "__main__":
 				except:
 						print ("pos : " + str(pos) + " line_number: " + str(line_number) + " digit_index: " + str(digit_index))
 
-	#for digit in digits:
-	#	print digit.determine_int_val()
-
 	for account_number in account_numbers:
-		print "here"
 		print account_number
 
 	print "Done"
