@@ -9,10 +9,10 @@ class Digit(object):
 	TWO   = numpy.matrix([[0,2,0], [0,2,1], [1,2,0]])
 	THREE = numpy.matrix([[0,2,0], [0,2,1], [0,2,1]])
 	FOUR  = numpy.matrix([[0,0,0], [1,2,1], [0,0,1]])
-	FIVE  = numpy.matrix([[0,1,0], [1,2,0], [0,2,1]])
-	SIX   = numpy.matrix([[0,1,0], [1,2,0], [1,2,1]])
-	SEVEN = numpy.matrix([[0,1,0], [0,0,1], [0,0,1]])
-	EIGHT = numpy.matrix([[0,1,0], [1,2,1], [1,2,1]])
+	FIVE  = numpy.matrix([[0,2,0], [1,2,0], [0,2,1]])
+	SIX   = numpy.matrix([[0,2,0], [1,2,0], [1,2,1]])
+	SEVEN = numpy.matrix([[0,2,0], [0,0,1], [0,0,1]])
+	EIGHT = numpy.matrix([[0,2,0], [1,2,1], [1,2,1]])
 	NINE  = numpy.matrix([[0,2,0], [1,2,1], [0,2,1]])
 
 	def __init__(self):
