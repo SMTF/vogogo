@@ -100,7 +100,11 @@ class AccountNumber(object):
 	def __str__(self):
 		out_string = ""
 		for digit in self.digits:
-			out_string += (str(digit.determine_int_val()))
+			int_val = digit.determine_int_val()
+			if int_val is not None:
+				out_string += (str(digit.determine_int_val()))
+			else:
+				out_string += "?"
 		return out_string
 
 
