@@ -97,6 +97,34 @@ class AccountNumber(object):
 	def set_digits(self, digits):
 		self.digits = copy.deepcopy(digits)
 
+	def check_broken_digits(self):
+		broken = False
+		if "?" in str(self):
+			broken = True
+		return broken
+
+	def checksum(self):
+		#((1*d1) + (2*d2) + ... + (9*d9)) mod 11 == 0
+		return ((1 * self.digits[0].digit_value) + \
+				(2 * self.digits[1].digit_value) + \
+				(3 * self.digits[2].digit_value) + \
+				(4 * self.digits[3].digit_value) + \
+				(5 * self.digits[4].digit_value) + \
+				(6 * self.digits[5].digit_value) + \
+				(7 * self.digits[6].digit_value) + \
+				(8 * self.digits[7].digit_value) + \
+				(9 * self.digits[8].digit_value) % 11 == 0 )
+		#return True
+
+
+	def validation_output(self):
+		output = str(self)
+		if self.check_broken_digits():
+			output += " ILL"
+		elif not self.checksum():
+			output += " ERR"
+		return output
+
 	def __str__(self):
 		out_string = ""
 		for digit in self.digits:
@@ -128,7 +156,8 @@ if __name__ == "__main__":
 	with open(FILE_PATH) as in_file:
 		for line_number, line in enumerate(in_file, start=1):
 			for pos, glif in enumerate(line, start=1):
-				if pos == 1  and glif == "\n":
+				#if pos == 1  and glif == "\n":
+				if line_number % 4 == 0:
 					account_number = AccountNumber()
 					account_number.set_digits(digits)
 					account_numbers.append(account_number)
@@ -160,6 +189,7 @@ if __name__ == "__main__":
 						print ("pos : " + str(pos) + " line_number: " + str(line_number) + " digit_index: " + str(digit_index))
 
 	for account_number in account_numbers:
-		print account_number
+		#print account_number
+		print account_number.validation_output()
 
 	print "Done"
