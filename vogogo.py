@@ -105,15 +105,15 @@ class AccountNumber(object):
 
 	def checksum(self):
 		#((1*d1) + (2*d2) + ... + (9*d9)) mod 11 == 0
-		return ((1 * self.digits[0].digit_value) + \
-				(2 * self.digits[1].digit_value) + \
-				(3 * self.digits[2].digit_value) + \
-				(4 * self.digits[3].digit_value) + \
+		return (((1 * self.digits[8].digit_value) + \
+				(2 * self.digits[7].digit_value) + \
+				(3 * self.digits[6].digit_value) + \
+				(4 * self.digits[5].digit_value) + \
 				(5 * self.digits[4].digit_value) + \
-				(6 * self.digits[5].digit_value) + \
-				(7 * self.digits[6].digit_value) + \
-				(8 * self.digits[7].digit_value) + \
-				(9 * self.digits[8].digit_value) % 11 == 0 )
+				(6 * self.digits[3].digit_value) + \
+				(7 * self.digits[2].digit_value) + \
+				(8 * self.digits[1].digit_value) + \
+				(9 * self.digits[0].digit_value)) % 11 == 0 )
 		#return True
 
 
