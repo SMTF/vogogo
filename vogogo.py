@@ -1,4 +1,5 @@
 import numpy
+import copy
 
 class Digit(object):
 	MAX_ROWS = 3
@@ -23,7 +24,6 @@ class Digit(object):
 		return
 
 	def _inc_pos(self):
-		print self.curr_pos
 		if self.curr_pos[1] == self.MAX_COLS - 1:
 			newX = self.curr_pos[0] + 1
 			newY = 0
@@ -50,28 +50,59 @@ class Digit(object):
 	def determine_int_val(self):
 		self.matrix = numpy.matrix(self.pre_matrix)
 		self.determinate = numpy.linalg.det(self.matrix)
-		print self.matrix
-		print self.determinate
+		value = None
 		if (self.matrix == self.ZERO).all():
-			print 0
+			value = 0
 		elif (self.matrix == self.ONE).all():
-			print 1
+			value = 1
 		elif (self.matrix == self.TWO).all():
-			print 2
+			value = 2
 		elif (self.matrix == self.THREE).all():
-			print 3
+			value = 3
 		elif (self.matrix == self.FOUR).all():
-			print 4
+			value = 4
 		elif (self.matrix == self.FIVE).all():
-			print 5
+			value = 5
 		elif (self.matrix == self.SIX).all():
-			print 6
+			value = 6
 		elif (self.matrix == self.SEVEN).all():
-			print 7
+			value = 7
 		elif (self.matrix == self.EIGHT).all():
-			print 8
+			value = 8
 		elif (self.matrix == self.NINE).all():
-			print 9
+			value = 9
+		self.digit_value = value
+		return value
+
+
+class AccountNumber(object):
+	LENGTH = 9
+
+	def __init__(self):
+		self.digits = self.init_digits()
+		return
+
+	def init_digits(self, digit_count = 9):
+		digits = []
+		digit_end = digit_count 
+		for i in range(0, digit_end):
+			digits.append(Digit())
+		return digits
+
+	def insert_digit(self, pos, digit):
+		self.digits[pos] = copy.deepcopy(digit)
+		return
+
+	def set_digits(self, digits):
+		self.digits = copy.deepcopy(digits)
+
+	def __str__(self):
+		out_string = ""
+		for digit in self.digits:
+			out_string += (str(digit.determine_int_val()))
+		return out_string
+
+
 
 def init_digits(digit_count = 9):
 	digits = []
@@ -80,18 +111,23 @@ def init_digits(digit_count = 9):
 		digits.append(Digit())
 	return digits
 
+
 if __name__ == "__main__":
 
 	FILE_PATH = "AccountNumbers.txt"
 
-	digits = init_digits()
+	account_numbers = []
 
-	in_file = open(FILE_PATH)
+	digits = init_digits()
 
 	with open(FILE_PATH) as in_file:
 		for line_number, line in enumerate(in_file, start=1):
 			for pos, glif in enumerate(line, start=1):
 				if pos == 1  and glif == "\n":
+					account_number = AccountNumber()
+					account_number.set_digits(digits)
+					account_numbers.append(account_number)
+					digits = init_digits()
 					continue
 				if pos >= 1 and pos <= 3:
 					digit_index = 0
@@ -118,8 +154,11 @@ if __name__ == "__main__":
 				except:
 						print ("pos : " + str(pos) + " line_number: " + str(line_number) + " digit_index: " + str(digit_index))
 
-	for digit in digits:
-		digit.determine_int_val()
+	#for digit in digits:
+	#	print digit.determine_int_val()
 
+	for account_number in account_numbers:
+		print "here"
+		print account_number
 
 	print "Done"
