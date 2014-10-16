@@ -5,11 +5,11 @@ import copy
 
 class Digit(object):
 	"""Digit Class represents an account number digit.
-	Class provides utily methods to translate "Glifs" in
-	specific order into 3x3 matricies.
+	Class provides utility methods to translate "Glifs" in
+	specific order into 3x3 matrices.
 	Glifs are inserted into this at positions determined
-	by an internal positions currsor.
-	Said 3x3 matricies can be compared to know 3x3 matrices
+	by an internal positions cursor.
+	Said 3x3 matrices can be compared to know 3x3 matrices
 	that are known to match specific int digits 1 - 9.
 	"""
 	MAX_ROWS = 3
@@ -45,7 +45,7 @@ class Digit(object):
 		return
 
 	def add_glif(self, glif):
-		"""Add a glif to the next position according to internal position currsor."""
+		"""Add a glif to the next position according to internal position cursor."""
 		if self.curr_pos[0] >= self.MAX_ROWS :
 			raise IndexError("Digit's Matrix Coordiate Max Reached pos[0] " \
 				+ str(self.curr_pos[0]) + " " + str(self.matrix))
@@ -63,7 +63,7 @@ class Digit(object):
 		"""Determine the integer value of Digit.
 		Value is None if Digit is not determinable.
 		Warning:  only call after all glifs have been added.
-		Note: evauluated integer value is stored as object member.
+		Note: evaluated integer value is stored as object member.
 		"""
 		self.matrix = numpy.matrix(self.pre_matrix)
 		self.determinate = numpy.linalg.det(self.matrix)
@@ -104,7 +104,7 @@ class AccountNumber(object):
 
 	def insert_digit(self, pos, digit):
 		"""Insert a digit into this AccountNumber at the provided position
-		deprecated:: currently deprecated in favor of set_digits 
+		deprecated:: currently deprecated in favour of set_digits 
 		"""
 		self.digits[pos] = copy.deepcopy(digit)
 		return
