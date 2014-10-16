@@ -18,7 +18,7 @@ class Digit(object):
 	NINE  = numpy.matrix([[0,2,0], [1,2,1], [0,2,1]])
 
 	def __init__(self):
-		self.pre_matrix = [[5,5,5], [5, 5,5], [5,5,5]]
+		self.pre_matrix = [[5,5,5], [5, 5,5], [5,5,5]] # init as value not in GLIF_VALUES
 		self.matrix = None
 		self.curr_pos = (0 ,0)
 		self.digit_value = None
@@ -80,15 +80,8 @@ class AccountNumber(object):
 	LENGTH = 9
 
 	def __init__(self):
-		self.digits = self.init_digits()
+		self.digits = AccountNumber.init_digits()
 		return
-
-	def init_digits(self, digit_count = 9):
-		digits = []
-		digit_end = digit_count 
-		for i in range(0, digit_end):
-			digits.append(Digit())
-		return digits
 
 	def insert_digit(self, pos, digit):
 		self.digits[pos] = copy.deepcopy(digit)
@@ -114,8 +107,6 @@ class AccountNumber(object):
 				(7 * self.digits[2].digit_value) + \
 				(8 * self.digits[1].digit_value) + \
 				(9 * self.digits[0].digit_value)) % 11 == 0 )
-		#return True
-
 
 	def validation_output(self):
 		output = str(self)
@@ -136,24 +127,19 @@ class AccountNumber(object):
 				out_string += "?"
 		return out_string
 
-
-
-def init_digits(digit_count = 9):
-	digits = []
-	digit_end = digit_count 
-	for i in range(0, digit_end):
-		digits.append(Digit())
-	return digits
+	@staticmethod
+	def init_digits(digit_count = 9):
+		digits = []
+		digit_end = digit_count 
+		for i in range(0, digit_end):
+			digits.append(Digit())
+		return digits
 
 
 if __name__ == "__main__":
-
 	FILE_PATH = "AccountNumbers.txt"
-
 	account_numbers = []
-
-	digits = init_digits()
-
+	digits = AccountNumber.init_digits()
 	with open(FILE_PATH) as in_file:
 		for line_number, line in enumerate(in_file, start=1):
 			for pos, glif in enumerate(line, start=1):
@@ -162,7 +148,7 @@ if __name__ == "__main__":
 					account_number = AccountNumber()
 					account_number.set_digits(digits)
 					account_numbers.append(account_number)
-					digits = init_digits()
+					digits = AccountNumber.init_digits()
 					continue
 				if pos >= 1 and pos <= 3:
 					digit_index = 0
@@ -188,9 +174,6 @@ if __name__ == "__main__":
 					digits[digit_index].add_glif(glif)
 				except:
 						print ("pos : " + str(pos) + " line_number: " + str(line_number) + " digit_index: " + str(digit_index))
-
 	for account_number in account_numbers:
-		#print account_number
 		print account_number.validation_output()
-
 	print "Done"
