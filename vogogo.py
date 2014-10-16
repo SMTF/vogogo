@@ -130,7 +130,8 @@ class AccountNumber(object):
 		for digit in self.digits:
 			int_val = digit.determine_int_val()
 			if int_val is not None:
-				out_string += (str(digit.determine_int_val()))
+				#out_string += (str(digit.determine_int_val()))
+				out_string += (str(digit.digit_value))
 			else:
 				out_string += "?"
 		return out_string
