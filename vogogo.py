@@ -93,6 +93,9 @@ class Digit(object):
 
 
 class AccountNumber(object):
+	"""AccountNumber class represents and validates
+	a list of account number Digits.
+	"""
 	LENGTH = 9
 
 	def __init__(self):
@@ -206,7 +209,9 @@ if __name__ == "__main__":
 				try:
 					digits[digit_index].add_glif(glif)
 				except:
-						print ("pos : " + str(pos) + " line_number: " + str(line_number) + " digit_index: " + str(digit_index))
+						print ("Problem reading file at: pos : " + str(pos) +\
+								" line_number: " + str(line_number) +\
+								" digit_index: " + str(digit_index))
 	for account_number in account_numbers:
 		print account_number.validation_output()
 	print "Done"
