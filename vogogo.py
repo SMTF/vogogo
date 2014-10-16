@@ -103,8 +103,8 @@ class AccountNumber(object):
 		return
 
 	def insert_digit(self, pos, digit):
-		"""Insert a digit into this AccountNumber at the provided position
-		deprecated:: currently deprecated in favour of set_digits 
+		"""Insert a digit into this AccountNumber at the provided position.
+		deprecated:: currently deprecated in favour of set_digits.
 		"""
 		self.digits[pos] = copy.deepcopy(digit)
 		return
@@ -126,7 +126,7 @@ class AccountNumber(object):
 	def checksum(self):
 		"""Validate AccountNumber digits via checksum formula:
 		((1*d1) + (2*d2) + ... + (9*d9)) mod 11 == 0
-		Returns True for valid AccountNumber False otherwise
+		Returns True for valid AccountNumber False otherwise.
 		"""
 		return (((1 * self.digits[8].digit_value) + \
 				(2 * self.digits[7].digit_value) + \
