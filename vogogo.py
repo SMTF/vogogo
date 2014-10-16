@@ -1,7 +1,17 @@
+"""This module is a solution to the Vogogo Development Exercise (Account Number)."""
+
 import numpy
 import copy
 
 class Digit(object):
+	"""Digit Class represents an account number digit.
+	Class provides utily methods to translate "Glifs" in
+	specific order into 3x3 matricies.
+	Glifs are inserted into this at positions determined
+	by an internal positions currsor.
+	Said 3x3 matricies can be compared to know 3x3 matrices
+	that are known to match specific int digits 1 - 9.
+	"""
 	MAX_ROWS = 3
 	MAX_COLS = 3
 	GLIF_VALUES = {" " : 0, "|" : 1, "_" : 2}
@@ -35,6 +45,7 @@ class Digit(object):
 		return
 
 	def add_glif(self, glif):
+		"""Add a glif to the next position according to internal position currsor."""
 		if self.curr_pos[0] >= self.MAX_ROWS :
 			raise IndexError("Digit's Matrix Coordiate Max Reached pos[0] " \
 				+ str(self.curr_pos[0]) + " " + str(self.matrix))
@@ -49,6 +60,11 @@ class Digit(object):
 		return
 
 	def determine_int_val(self):
+		"""Determine the integer value of Digit.
+		Value is None if Digit is not determinable.
+		Warning:  only call after all glifs have been added.
+		Note: evauluated integer value is stored as object member.
+		"""
 		self.matrix = numpy.matrix(self.pre_matrix)
 		self.determinate = numpy.linalg.det(self.matrix)
 		value = None
@@ -84,20 +100,30 @@ class AccountNumber(object):
 		return
 
 	def insert_digit(self, pos, digit):
+		"""Insert a digit into this AccountNumber at the provided position
+		deprecated:: currently deprecated in favor of set_digits 
+		"""
 		self.digits[pos] = copy.deepcopy(digit)
 		return
 
 	def set_digits(self, digits):
+		"""Deep copy a list of digits into this AccountNumber."""
 		self.digits = copy.deepcopy(digits)
 
 	def check_broken_digits(self):
+		"""Detect "Broken" (Undeterminable) Digits in this AccountNumber
+		Return True if found False otherwise.
+		"""
 		broken = False
 		if "?" in str(self):
 			broken = True
 		return broken
 
 	def checksum(self):
-		#((1*d1) + (2*d2) + ... + (9*d9)) mod 11 == 0
+		"""Validate AccountNumber digits via checksum formula:
+		((1*d1) + (2*d2) + ... + (9*d9)) mod 11 == 0
+		Returns True for valid AccountNumber False otherwise
+		"""
 		return (((1 * self.digits[8].digit_value) + \
 				(2 * self.digits[7].digit_value) + \
 				(3 * self.digits[6].digit_value) + \
@@ -109,6 +135,13 @@ class AccountNumber(object):
 				(9 * self.digits[0].digit_value)) % 11 == 0 )
 
 	def validation_output(self):
+		"""Performs Validation and Error Checking on AccountNumber Digits
+		Returns String output of the form:
+			49006771? ILL
+			1234?678? ILL
+			457508000
+			664371495 ERR
+		"""
 		output = str(self)
 		if self.check_broken_digits():
 			output += " ILL"
