@@ -112,6 +112,7 @@ class AccountNumber(object):
 	def set_digits(self, digits):
 		"""Deep copy a list of digits into this AccountNumber."""
 		self.digits = copy.deepcopy(digits)
+		return
 
 	def check_broken_digits(self):
 		"""Detect "Broken" (Undeterminable) Digits in this AccountNumber
@@ -157,7 +158,6 @@ class AccountNumber(object):
 		for digit in self.digits:
 			int_val = digit.determine_int_val()
 			if int_val is not None:
-				#out_string += (str(digit.determine_int_val()))
 				out_string += (str(digit.digit_value))
 			else:
 				out_string += "?"
@@ -209,9 +209,9 @@ if __name__ == "__main__":
 				try:
 					digits[digit_index].add_glif(glif)
 				except:
-						print ("Problem reading file at: pos : " + str(pos) +\
-								" line_number: " + str(line_number) +\
-								" digit_index: " + str(digit_index))
+					print ("Problem reading file at: pos : " + str(pos) +\
+							" line_number: " + str(line_number) +\
+							" digit_index: " + str(digit_index))
 	for account_number in account_numbers:
 		print account_number.validation_output()
 	print "Done"
